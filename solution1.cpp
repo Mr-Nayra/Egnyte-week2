@@ -6,16 +6,19 @@ using namespace std;
 
 class Task1
 {
-public:
-    vector<vector<int>> matrix;
-    int x;
-    int y;
+private:
+    vector<vector<int>> matrix; // Matrix to store the input data
+    int x;                      // Number of rows in the matrix
+    int y;                      // Number of columns in the matrix
 
+public:
+    // Function to load data from a file
     void loadFile(string &path)
     {
         vector<int> temp;
         std::ifstream inputFile(path);
 
+        // Check if the file is open
         if (!inputFile.is_open())
         {
             std::cerr << "Error opening the file." << std::endl;
@@ -24,16 +27,19 @@ public:
 
         int number;
 
+        // Read the number of rows from the file
         if (inputFile >> number)
         {
             x = number;
         }
 
+        // Read the number of columns from the file
         if (inputFile >> number)
         {
             y = number;
         }
 
+        // Read matrix data from the file
         for (int i = 0; i < x; i++)
         {
             for (int j = 0; j < y; j++)
@@ -51,21 +57,22 @@ public:
             temp.clear();
         }
 
-
         // Close the file
         inputFile.close();
     }
 
+    // Function to save the solution to a files
     void saveSolution()
     {
         vector<bool> row(x, false);
         vector<bool> col(y, false);
         int i, j;
 
+        // Mark rows and columns containing 0 in the matrix
         for (i = 0; i < x; i++)
         {
             for (j = 0; j < y; j++)
-            {   
+            {
                 if (matrix[i][j] == 0)
                 {
                     row[i] = true;
@@ -82,17 +89,18 @@ public:
             std::cerr << "Error opening the file for writing." << std::endl;
         }
 
+        // Write the solution matrix to the file
         for (i = 0; i < x; i++)
         {
             for (j = 0; j < y; j++)
             {
                 if (row[i] || col[j])
                 {
-                    outputFile << 0 << " ";
+                    outputFile << 0 << " "; // Write 0 for marked rows and columns
                 }
                 else
                 {
-                    outputFile << matrix[i][j] << " ";
+                    outputFile << matrix[i][j] << " "; // Write the original value
                 }
             }
 

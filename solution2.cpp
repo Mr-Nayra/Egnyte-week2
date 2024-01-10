@@ -9,9 +9,9 @@ using namespace std;
 class Task1
 {
 private:
-    vector<vector<int>> matrix;
-    int x;
-    int y;
+    vector<vector<int>> matrix; // Matrix to store the input data
+    int x;                      // Number of rows in the matrix
+    int y;                      // Number of columns in the matrix
 
     void setToZero()
     {
@@ -70,6 +70,7 @@ private:
     }
 
 public:
+    // Function to load data from a file
     void loadFile(string &path)
     {
         vector<int> temp;
@@ -83,16 +84,19 @@ public:
 
         int number;
 
+        // Read the number of rows from the file
         if (inputFile >> number)
         {
             x = number;
         }
 
+        // Read the number of columns from the file
         if (inputFile >> number)
         {
             y = number;
         }
 
+        // Read matrix data from the file
         for (int i = 0; i < x; i++)
         {
             for (int j = 0; j < y; j++)
@@ -114,6 +118,7 @@ public:
         inputFile.close();
     }
 
+    // Function to save the solution to a file
     void saveSolution()
     {
         setToZero();
