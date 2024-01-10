@@ -1,3 +1,5 @@
+
+
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -6,11 +8,68 @@ using namespace std;
 
 class Task1
 {
-public:
+private:
     vector<vector<int>> matrix;
     int x;
     int y;
 
+    void setToZero()
+    {
+        int i, j, temp = 1;
+
+        for (i = 0; i < x; i++)
+        {
+            if (matrix[i][0] == 0)
+                temp = 0;
+        }
+
+        for (j = 1; j < y; j++)
+        {
+            if (matrix[0][j] == 0)
+                matrix[0][0] = 0;
+        }
+
+        for (i = 1; i < x; i++)
+        {
+            for (j = 1; j < y; j++)
+            {
+                if (matrix[i][j] == 0)
+                {
+                    matrix[i][0] = 0;
+                    matrix[0][j] = 0;
+                }
+            }
+        }
+
+        for (i = 1; i < x; i++)
+        {
+            for (j = 1; j < y; j++)
+            {
+                if (matrix[i][0] == 0 || matrix[0][j] == 0)
+                {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+
+        if (matrix[0][0] == 0)
+        {
+            for (i = 0; i < x; i++)
+            {
+                matrix[0][i] = 0;
+            }
+        }
+
+        if (temp == 0)
+        {
+            for (i = 0; i < x; i++)
+            {
+                matrix[i][0] = 0;
+            }
+        }
+    }
+
+public:
     void loadFile(string &path)
     {
         vector<int> temp;
@@ -51,28 +110,13 @@ public:
             temp.clear();
         }
 
-
         // Close the file
         inputFile.close();
     }
 
     void saveSolution()
     {
-        vector<bool> row(x, false);
-        vector<bool> col(y, false);
-        int i, j;
-
-        for (i = 0; i < x; i++)
-        {
-            for (j = 0; j < y; j++)
-            {   
-                if (matrix[i][j] == 0)
-                {
-                    row[i] = true;
-                    col[j] = true;
-                }
-            }
-        }
+        setToZero();
 
         std::ofstream outputFile({"solution.txt"});
 
@@ -82,18 +126,11 @@ public:
             std::cerr << "Error opening the file for writing." << std::endl;
         }
 
-        for (i = 0; i < x; i++)
+        for (int i = 0; i < x; i++)
         {
-            for (j = 0; j < y; j++)
+            for (int j = 0; j < y; j++)
             {
-                if (row[i] || col[j])
-                {
-                    outputFile << 0 << " ";
-                }
-                else
-                {
-                    outputFile << matrix[i][j] << " ";
-                }
+                outputFile << matrix[i][j] << " ";
             }
 
             outputFile << endl;
