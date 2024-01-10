@@ -1,3 +1,6 @@
+// Space Complexity: O(1)
+// Time Complexity: O(nXm)
+
 #include <iostream>
 #include <fstream>
 #include <vector>
